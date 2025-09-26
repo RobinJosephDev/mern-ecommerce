@@ -1,0 +1,27 @@
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: #5e5e5e;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 20px 10%;
+}
+.breadcrumbs img {
+  height: 12px;
+}
+
+@media (max-width: 1024px) {
+  .breadcrumbs {
+    margin: 20px 8%;
+  }
+}
+@media (max-width: 800px) {
+  .breadcrumbs {
+    margin: 20px 5%;
+  }
+  .breadcrumbs img {
+    height: 10px;
+  }
+}

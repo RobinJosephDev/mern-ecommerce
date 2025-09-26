@@ -19,7 +19,9 @@ const Navbar = () => {
             setMenu("shop");
           }}
         >
-          <Link to="/">Shop</Link>
+          <Link style={{ textDecoration: "none" }} to="/">
+            Shop
+          </Link>
           {menu === "shop" ? <hr /> : <></>}
         </li>
         <li
@@ -27,14 +29,19 @@ const Navbar = () => {
             setMenu("mens");
           }}
         >
-          <Link to="/mens">Men</Link> {menu === "mens" ? <hr /> : <></>}
+          <Link style={{ textDecoration: "none" }} to="/mens">
+            Men
+          </Link>{" "}
+          {menu === "mens" ? <hr /> : <></>}
         </li>
         <li
           onClick={() => {
             setMenu("womens");
           }}
         >
-          <Link to="/womens">Women</Link>
+          <Link style={{ textDecoration: "none" }} to="/womens">
+            Women
+          </Link>
           {menu === "womens" ? <hr /> : <></>}
         </li>
         <li
@@ -42,15 +49,17 @@ const Navbar = () => {
             setMenu("kids");
           }}
         >
-          <Link to="/kids">Kids</Link>
+          <Link style={{ textDecoration: "none" }} to="/kids">
+            Kids
+          </Link>
           {menu === "kids" ? <hr /> : <></>}
         </li>
       </ul>
       <div className="nav-login-cart">
-        <Link to="/login">
+        <Link style={{ textDecoration: "none" }} to="/login">
           <button>Login</button>
         </Link>
-        <Link to="/cart">
+        <Link style={{ textDecoration: "none" }} to="/cart">
           <img src={cart_icon} alt="" />
         </Link>
 
