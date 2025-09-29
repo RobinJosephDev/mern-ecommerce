@@ -28,6 +28,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// Schema for creating user model
+const Users = mongoose.model("Users", {
+  name: { type: String },
+  email: { type: String, unique: true },
+  password: { type: String },
+  cartData: { type: Object },
+  date: { type: Date, default: Date.now() },
+});
+
 // Schema for creating Product
 const Product = mongoose.model("Product", {
   id: { type: Number, required: true },
@@ -48,6 +57,70 @@ const Product = mongoose.model("Product", {
 // test route
 app.get("/", (req, res) => {
   res.send("Express app is running");
+});
+
+//Register
+app.post("/signup", async (req, res) => {
+  console.log("Sign Up");
+  let success = false;
+  let check = await Users.findOne({ email: req.body.email });
+  if (check) {
+    return res.status(400).json({
+      success: success,
+      errors: "existing user found with this email",
+    });
+  }
+  let cart = {};
+  for (let i = 0; i < 300; i++) {
+    cart[i] = 0;
+  }
+  const user = new Users({
+    name: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+    cartData: cart,
+  });
+  await user.save();
+  const data = {
+    user: {
+      id: user.id,
+    },
+  };
+
+  const token = jwt.sign(data, "secret_ecom");
+  success = true;
+  res.json({ success, token });
+});
+
+// Login
+app.post("/login", async (req, res) => {
+  console.log("Login");
+  let success = false;
+  let user = await Users.findOne({ email: req.body.email });
+  if (user) {
+    const passCompare = req.body.password === user.password;
+    if (passCompare) {
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+      success = true;
+      console.log(user.id);
+      const token = jwt.sign(data, "secret_ecom");
+      res.json({ success, token });
+    } else {
+      return res.status(400).json({
+        success: success,
+        errors: "please try with correct email/password",
+      });
+    }
+  } else {
+    return res.status(400).json({
+      success: success,
+      errors: "please try with correct email/password",
+    });
+  }
 });
 
 // serve images
@@ -97,7 +170,7 @@ app.post("/add_product", async (req, res) => {
 app.post("/delete_product", async (req, res) => {
   await Product.findOneAndDelete({ id: req.body.id });
   console.log("Removed");
-  res.json({ success: true, name: req.body.name })
+  res.json({ success: true, name: req.body.name });
 });
 
 // start server

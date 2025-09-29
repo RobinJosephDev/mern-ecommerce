@@ -1,11 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./css/ShopCategory.css";
 import dropdown_icon from "../Components/Assets/dropdown_icon.png";
 import Item from "../Components/Item/Item";
 import { Link } from "react-router-dom";
-import { ShopContext } from "../Context/ShopContext";
+
 const ShopCategory = (props) => {
-  const { all_product } = useContext(ShopContext);
+  const [allproducts, setAllProducts] = useState([]);
+
+  const fetchInfo = () => {
+    fetch("http://localhost:4000/all_products")
+      .then((res) => res.json())
+      .then((data) => setAllProducts(data));
+  };
+
+  useEffect(() => {
+    fetchInfo();
+  }, []);
 
   return (
     <div className="shopcategory">
@@ -19,7 +29,7 @@ const ShopCategory = (props) => {
         </div>
       </div>
       <div className="shopcategory-products">
-        {all_product.map((item, i) => {
+        {allproducts.map((item, i) => {
           if (props.category === item.category) {
             return (
               <Item
