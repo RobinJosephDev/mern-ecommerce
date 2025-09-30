@@ -5,7 +5,7 @@ import { ShopContext } from "../../Context/ShopContext";
 
 const CartItems = () => {
   const { products } = useContext(ShopContext);
-  const { all_product, cartItems, removeFromCart, getTotalCartAmount } =
+  const { cartItems, removeFromCart, getTotalCartAmount } =
     useContext(ShopContext);
 
   return (
@@ -19,7 +19,7 @@ const CartItems = () => {
         <p>Remove</p>
       </div>
       <hr />
-      {all_product.map((e) => {
+      {products.map((e) => {
         if (cartItems[e.id] > 0) {
           return (
             <div>

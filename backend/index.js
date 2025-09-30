@@ -173,6 +173,69 @@ app.post("/delete_product", async (req, res) => {
   res.json({ success: true, name: req.body.name });
 });
 
+// Popular in Women
+app.get("/popular_in_women", async (req, res) => {
+  let products = await Product.find({ category: "women" });
+  let arr = products.splice(0, 4);
+  console.log("Popular In Women");
+  res.send(arr);
+});
+
+// Latest Products
+app.get("/new_collections", async (req, res) => {
+  let products = await Product.find({});
+  let arr = products.slice(0).slice(-8);
+  console.log("New Collections");
+  res.send(arr);
+});
+
+// MiddleWare to fetch user from token
+const fetchuser = async (req, res, next) => {
+  const token = req.header("auth-token");
+  if (!token) {
+    res.status(401).send({ errors: "Please authenticate using a valid token" });
+  }
+  try {
+    const data = jwt.verify(token, "secret_ecom");
+    req.user = data.user;
+    next();
+  } catch (error) {
+    res.status(401).send({ errors: "Please authenticate using a valid token" });
+  }
+};
+
+// View Cart
+app.post("/get_cart", fetchuser, async (req, res) => {
+  console.log("Get Cart");
+  let userData = await Users.findOne({ _id: req.user.id });
+  res.json(userData.cartData);
+});
+ 
+// Add to cart
+app.post("/add_to_cart", fetchuser, async (req, res) => {
+  let userData = await Users.findOne({ _id: req.user.id });
+  userData.cartData[req.body.itemId] += 1;
+  await Users.findOneAndUpdate(
+    { _id: req.user.id },
+    { cartData: userData.cartData }
+  );
+  res.send("Added");
+});
+
+// Remove from cart
+app.post("/remove_from_cart", fetchuser, async (req, res) => {
+  console.log("Remove Cart");
+  let userData = await Users.findOne({ _id: req.user.id });
+  if (userData.cartData[req.body.itemId] != 0) {
+    userData.cartData[req.body.itemId] -= 1;
+  }
+  await Users.findOneAndUpdate(
+    { _id: req.user.id },
+    { cartData: userData.cartData }
+  );
+  res.send("Removed");
+});
+
 // start server
 app.listen(port, (error) => {
   if (!error) console.log("Server running on port " + port);
