@@ -5,9 +5,9 @@ import Description from "../Components/Description/Description";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 
-console.log("Breadcrumbs:", Breadcrumbs);
-console.log("ProductDisplay:", ProductDisplay);
-console.log("Description:", Description);
+// console.log("Breadcrumbs:", Breadcrumbs);
+// console.log("ProductDisplay:", ProductDisplay);
+// console.log("Description:", Description);
 
 const Product = () => {
   const { products } = useContext(ShopContext);
