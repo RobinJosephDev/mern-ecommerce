@@ -95,12 +95,6 @@ npm start
 
 ---
 
-## 📹 Video Tutorial
-
-* Step-by-step walkthrough available on YouTube: [Click Here](https://youtu.be/9ObIuvWFaSI)
-
----
-
 ## 🔒 Security Highlights
 
 * JWT authentication for secure login
