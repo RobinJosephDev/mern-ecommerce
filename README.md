@@ -1,80 +1,128 @@
 # 🛒 MERN Ecommerce App
 
-A **full-stack ecommerce platform** built with the **MERN stack** (MongoDB, Express, React, Node.js). Includes product management, authentication, a shopping cart, order tracking, and an admin dashboard.
+A **full-stack ecommerce platform** built with the **MERN stack** (MongoDB, Express, React, Node.js). This app features product management, user authentication, a shopping cart, order tracking, and an admin dashboard.
 
 > Video Tutorial: [Watch Here](https://youtu.be/9ObIuvWFaSI)
 
 ---
 
-## 🚀 Prerequisites
+## 🚀 Features
 
-* **Node.js** (LTS recommended)
-  Download and install from [Node.js Official Website](https://nodejs.org/en/download/)
-* **MongoDB** (Atlas or local setup)
-
----
-
-## 🏗️ Backend Setup
-
-### 1️⃣ Open Project in VS Code
-
-* Right-click the project folder in the sidebar > Select **Open in Integrated Terminal**
-
-### 2️⃣ Install Dependencies
-
-```bash
-npm install
-```
-
-### 3️⃣ Setup MongoDB
-
-1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) and sign up.
-2. Click **New Project**.
-3. Build a database in the **Database Section**.
-4. Select **M0**, choose your region, and create database.
-5. Setup **Username & Password**.
-6. Add IP `0.0.0.0` in Network Access and click **Add Entry**.
-7. Click **Finish & Close**.
-8. Click **Connect**, select **Compass**, and copy the connection string.
-9. Paste the connection string in `index.js`, replace `<password>` with your password, and save.
-
-### 4️⃣ Run Backend
-
-```bash
-node ./index.js
-```
-
-* Backend server will start.
+* User registration and login with **JWT authentication**
+* Browse products with search and filter functionality
+* Add to cart and checkout system
+* Order history and tracking
+* Admin panel to manage products, users, and orders
+* Responsive UI using React and Tailwind CSS
+* Backend API with Express and MongoDB Atlas
 
 ---
 
-## 💻 Frontend & Admin Panel Setup
+## 🧰 Tech Stack
 
-### 1️⃣ Open Project Folder in VS Code
+| Layer          | Technologies Used                                         |
+| -------------- | --------------------------------------------------------- |
+| **Frontend**   | React, Tailwind CSS, DaisyUI, Zustand                     |
+| **Backend**    | Node.js, Express.js, MongoDB, JWT, bcrypt, Helmet, Morgan |
+| **Database**   | MongoDB Atlas                                             |
+| **Deployment** | Vercel (Frontend), Render (Backend)                       |
 
-* Right-click > **Open in Integrated Terminal**
+---
 
-### 2️⃣ Install Dependencies
+## 🏗️ Project Structure
+
+```
+mern-ecommerce/
+├── backend/          # Node + Express backend
+│   ├── index.js
+│   ├── models/
+│   ├── routes/
+│   ├── controllers/
+│   └── package.json
+├── frontend/         # React frontend
+│   ├── src/
+│   ├── public/
+│   └── package.json
+├── .env.example      # Example environment variables
+└── README.md
+```
+
+---
+
+## ⚙️ Backend Setup
+
+### 1️⃣ Install Dependencies
 
 ```bash
+cd backend
 npm install
 ```
 
-* Wait for installation; `node_modules` folder will appear.
+### 2️⃣ Setup MongoDB Atlas
 
-### 3️⃣ Run Frontend / Admin Panel
+1. Sign up at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+2. Create a new project and a database cluster
+3. Set username and password for database user
+4. Add IP address `0.0.0.0` in Network Access
+5. Copy the connection string from Compass option
+6. Paste it in `index.js`, replacing `<password>` with your DB password
+
+### 3️⃣ Run Backend
+
+```bash
+node index.js
+```
+
+* Backend server will start on your specified port (default `5000`)
+
+---
+
+## 💻 Frontend Setup
+
+### 1️⃣ Install Dependencies
+
+```bash
+cd frontend
+npm install
+```
+
+### 2️⃣ Run Frontend
 
 ```bash
 npm start
 ```
 
-* Your project will open in the default web browser.
+* Frontend runs on `http://localhost:3000`
+* Admin panel included within the frontend app
 
 ---
 
-## 📹 More Tutorials
+## 📹 Video Tutorial
 
-* Check out [GreatStackDev YouTube Channel](https://www.youtube.com/@GreatStackDev/videos) for additional videos and guides.
+* Step-by-step walkthrough available on YouTube: [Click Here](https://youtu.be/9ObIuvWFaSI)
+
+---
+
+## 🔒 Security Highlights
+
+* JWT authentication for secure login
+* Passwords hashed with bcrypt
+* Helmet and CORS configured on backend
+* Input validation and sanitization
+
+---
+
+## 🚀 Deployment
+
+### Frontend
+
+* Deployed on **Vercel**
+* Build using `npm run build`
+
+### Backend
+
+* Deployed on **Render**
+* Set environment variables (MONGO_URI, JWT secrets) in Render dashboard
 
 ---
 
