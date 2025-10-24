@@ -2,8 +2,6 @@
 
 A **full-stack ecommerce platform** built with the **MERN stack** (MongoDB, Express, React, Node.js). This app features product management, user authentication, a shopping cart, order tracking, and an admin dashboard.
 
-> Video Tutorial: [Watch Here](https://youtu.be/9ObIuvWFaSI)
-
 ---
 
 ## 🚀 Features
