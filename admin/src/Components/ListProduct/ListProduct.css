@@ -39,6 +39,56 @@
 .listproduct-allproducts::-webkit-scrollbar {
   display: none;
 }
+
+/* 🔹 Filters Section */
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  background: #f7f7f7;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Each input/select inside filters */
+.filters input[type="text"],
+.filters input[type="number"],
+.filters select {
+  flex: 1;
+  min-width: 120px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+/* Hover and focus states */
+.filters input:focus,
+.filters select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.4);
+}
+
+/* Price range inputs wrapper */
+.filters label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.filters label input {
+  width: 80px;
+}
+
 @media (max-width: 800px) {
   .listproduct {
     box-sizing: border-box;
@@ -54,5 +104,23 @@
   }
   .listproduct-product-icon {
     height: 60px;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .filters label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
   }
 }
