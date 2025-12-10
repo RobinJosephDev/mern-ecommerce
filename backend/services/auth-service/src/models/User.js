@@ -6,6 +6,11 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   cartData: { type: Object, default: {} },
   refreshToken: { type: String, default: null },
+  role: { 
+    type: String, 
+    enum: ["user", "admin"],
+    default: "user" 
+  },
   date: { type: Date, default: Date.now },
 });
 

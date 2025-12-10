@@ -3,15 +3,13 @@ const Product = require("../models/Product");
 // ---------- Add Product ----------
 exports.addProduct = async (req, res) => {
   try {
-    const products = await Product.find({});
-    const id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
-
-    const product = new Product({ id, ...req.body });
-    await product.save();
-
-    res.json({ success: true, product });
+    console.log("Request body:", req.body);
+    const product = new Product(req.body);
+    const saved = await product.save();
+    console.log("Saved product:", saved);
+    res.json({ success: true, product: saved });
   } catch (err) {
-    console.error(err);
+    console.error("Insert error:", err);
     res.status(500).json({ error: "Server error" });
   }
 };
