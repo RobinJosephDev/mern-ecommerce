@@ -4,8 +4,20 @@ const User = require("../models/User");
 exports.getCart = async (req, res) => {
   try {
     const user = await User.findById(req.body.userId);
-    if (!user) return res.status(404).json({ error: "User not found" });
-    res.json(user.cartData);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // ✅ CLEAN CART HERE
+    const cleanCart = Object.fromEntries(
+      [...user.cartData.entries()].filter(([_, qty]) => qty > 0)
+    );
+
+    res.json({
+      success: true,
+      cart: cleanCart,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -17,13 +29,26 @@ exports.addToCart = async (req, res) => {
   try {
     const { userId, itemId } = req.body;
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ error: "User not found" });
 
-    if (!user.cartData[itemId]) user.cartData[itemId] = 0;
-    user.cartData[itemId] += 1;
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const key = String(itemId);
+
+    user.cartData.set(key, (user.cartData.get(key) || 0) + 1);
 
     await user.save();
-    res.json({ success: true, cart: user.cartData });
+
+    // ✅ CLEAN CART HERE
+    const cleanCart = Object.fromEntries(
+      [...user.cartData.entries()].filter(([_, qty]) => qty > 0)
+    );
+
+    res.json({
+      success: true,
+      cart: cleanCart,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -35,12 +60,39 @@ exports.removeFromCart = async (req, res) => {
   try {
     const { userId, itemId } = req.body;
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ error: "User not found" });
 
-    if (user.cartData[itemId] > 0) user.cartData[itemId] -= 1;
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const key = String(itemId);
+    const currentQty = user.cartData.get(key);
+
+    if (!currentQty) {
+      return res.json({
+        success: true,
+        cart: Object.fromEntries(user.cartData),
+      });
+    }
+
+    if (currentQty > 1) {
+      user.cartData.set(key, currentQty - 1);
+    } else {
+      // ✅ remove item completely when qty hits 0
+      user.cartData.delete(key);
+    }
 
     await user.save();
-    res.json({ success: true, cart: user.cartData });
+
+    // ✅ return cleaned cart
+    const cleanCart = Object.fromEntries(
+      [...user.cartData.entries()].filter(([_, qty]) => qty > 0)
+    );
+
+    res.json({
+      success: true,
+      cart: cleanCart,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
