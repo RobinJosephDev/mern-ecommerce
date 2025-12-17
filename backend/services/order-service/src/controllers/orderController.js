@@ -1,6 +1,8 @@
 const Order = require("../models/Order");
+const { publishToQueue } = require("../utils/rabbitmq");
 
 // ---------- Create Order ----------
+
 exports.createOrder = async (req, res) => {
   try {
     const { userId, items, totalAmount } = req.body;
@@ -8,8 +10,27 @@ exports.createOrder = async (req, res) => {
     if (!userId || !items || !totalAmount)
       return res.status(400).json({ error: "Missing order details" });
 
-    const order = new Order({ userId, items, totalAmount });
+    const order = new Order({
+      userId,
+      items,
+      totalAmount,
+      status: "PENDING",
+    });
+
     await order.save();
+
+    // Publish event (non-blocking, safe)
+    try {
+      await publishToQueue("order_created", {
+        orderId: order._id,
+        userId,
+        items,
+        totalAmount,
+      });
+      console.log("order_created event published");
+    } catch (err) {
+      console.error("Failed to publish order_created:", err.message);
+    }
 
     res.json({ success: true, order });
   } catch (err) {

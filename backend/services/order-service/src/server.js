@@ -5,6 +5,9 @@ const orderRoutes = require("./routes/orderRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 4004;
+const { connectRabbitMQ } = require("./utils/rabbitmq");
+
+connectRabbitMQ().catch(console.error);
 
 app.use(express.json());
 app.use(
