@@ -104,20 +104,6 @@ npm start
 
 ---
 
-## 🚀 Deployment
-
-### Frontend
-
-* Deployed on **Vercel**
-* Build using `npm run build`
-
-### Backend
-
-* Deployed on **Render**
-* Set environment variables (MONGO_URI, JWT secrets) in Render dashboard
-
----
-
 ## 👤 Author
 
 **Robin Joseph**
