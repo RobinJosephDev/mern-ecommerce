@@ -22,8 +22,7 @@ A **full-stack ecommerce platform** built with the **MERN stack** (MongoDB, Expr
 | -------------- | --------------------------------------------------------- |
 | **Frontend**   | React, Tailwind CSS, DaisyUI, Zustand                     |
 | **Backend**    | Node.js, Express.js, MongoDB, JWT |
-| **Database**   | MongoDB Atlas                                             |
-| **Deployment** | Vercel (Frontend), Render (Backend)                       |
+| **Database**   | MongoDB Atlas                                             |             |
 
 ---
 
