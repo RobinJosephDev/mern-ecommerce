@@ -21,7 +21,7 @@ A **full-stack ecommerce platform** built with the **MERN stack** (MongoDB, Expr
 | Layer          | Technologies Used                                         |
 | -------------- | --------------------------------------------------------- |
 | **Frontend**   | React, Tailwind CSS, DaisyUI, Zustand                     |
-| **Backend**    | Node.js, Express.js, MongoDB, JWT |
+| **Backend**    | Node.js, Express.js, MongoDB, JWT, bcrypt
 | **Database**   | MongoDB Atlas                                             |             |
 
 ---
@@ -98,7 +98,7 @@ npm start
 
 * JWT authentication for secure login
 * Passwords hashed with bcrypt
-* Helmet and CORS configured on backend
+* CORS configured on backend
 * Input validation and sanitization
 
 ---
