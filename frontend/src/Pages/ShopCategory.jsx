@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const ShopCategory = (props) => {
   const [allproducts, setAllProducts] = useState([]);
+  const [sortMethod, setSortMethod] = useState("price-asc"); // default sort by price (ascending)
 
   const fetchInfo = () => {
     fetch("http://localhost:4000/all_products")
@@ -17,6 +18,26 @@ const ShopCategory = (props) => {
     fetchInfo();
   }, []);
 
+  // Sorting logic
+  const sortedProducts = allproducts
+    .filter((item) => item.category === props.category) // Filter by category
+    .sort((a, b) => {
+      if (sortMethod === "price-asc") {
+        return a.new_price - b.new_price; // Sort by price (ascending)
+      } else if (sortMethod === "price-desc") {
+        return b.new_price - a.new_price; // Sort by price (descending)
+      } else if (sortMethod === "name-asc") {
+        return a.name.localeCompare(b.name); // Sort by name (ascending)
+      } else if (sortMethod === "name-desc") {
+        return b.name.localeCompare(a.name); // Sort by name (descending)
+      }
+      return 0; // Default (no sorting)
+    });
+
+  const handleSortChange = (e) => {
+    setSortMethod(e.target.value); // Update the sort method
+  };
+
   return (
     <div className="shopcategory">
       <img src={props.banner} className="shopcategory-banner" alt="" />
@@ -24,26 +45,30 @@ const ShopCategory = (props) => {
         <p>
           <span>Showing 1 - 12</span> out of 54 Products
         </p>
-        <div className="shopcategory-sort">
-          Sort by <img src={dropdown_icon} alt="" />
-        </div>
+
+        <select
+          className="shopcategory-sort-dropdown"
+          value={sortMethod}
+          onChange={handleSortChange}
+        >
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name-asc">Name: A to Z</option>
+          <option value="name-desc">Name: Z to A</option>
+        </select>
       </div>
       <div className="shopcategory-products">
-        {allproducts.map((item, i) => {
-          if (props.category === item.category) {
-            return (
-              <Item
-                id={item.id}
-                key={i}
-                name={item.name}
-                image={item.image}
-                new_price={item.new_price}
-                old_price={item.old_price}
-              />
-            );
-          } else {
-            return null;
-          }
+        {sortedProducts.map((item, i) => {
+          return (
+            <Item
+              id={item.id}
+              key={i}
+              name={item.name}
+              image={item.image}
+              new_price={item.new_price}
+              old_price={item.old_price}
+            />
+          );
         })}
       </div>
       <div className="shopcategory-loadmore">
